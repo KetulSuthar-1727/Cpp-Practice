@@ -1259,3 +1259,53 @@ int main() {
 
     return 0;
 }
+
+// this is the letter combination of a phone number problem in the leetcode problem number 17
+
+void solve(string digits, vector<string>& ans, string output, int index, vector<string>& hp){
+
+    if(index >= digits.size()){
+        ans.push_back(output);
+        return;
+    }
+
+    int digit = digits[index] + '0' // in this line we convert the first element of the given input into the integer so we can access it using the index in hp
+
+    string value = hp[digit];  // in this we store the value of the coresponding number like 2 : "abc" in the string value 
+
+    // then we will apply the loop for each value in the string and check all the possible combinations
+
+    for(int i = 0; i < value.size(); i++){
+        char ch = value[i];
+        
+        solve(digits, ans, output + ch, index + 1, hp);
+        
+    }
+
+
+
+}
+
+int main(){
+
+    string digits = "234";
+    vector<string> ans;
+    string output = "";
+    int index = 0;
+
+    vector<string> hp(10);
+    hp[2] = "abc";
+    hp[3] = "def";
+    hp[4] = "ghi";
+    hp[5] = "jkl";
+    hp[6] = "mno";
+    hp[7] = "pqrs";
+    hp[8] = "tuv";
+    hp[9] = "wxyz";
+
+    solve(digits, ans, output, index, hp);
+
+    for(auto it : ans){
+        cout << it << endl;
+    }
+}
