@@ -1309,3 +1309,82 @@ int main(){
         cout << it << endl;
     }
 }
+
+// This is the combination sum problem of the leetcode
+
+void combinationSum(vector<int>& arr, vector<int>& ans, vector<vector<int>>& finalAns, int index, int target){
+
+    // if the target is below zero means we have to pop back the number
+    if(target < 0){
+        return;
+    }
+
+    // if the sum is eqaul to target then we add ans to the list
+    if(target == 0){
+        finalAns.push_back(ans);
+        return;
+    }
+
+    // we apply the loop for the all the element in the array
+    for (int i = index; i < arr.size(); i++)
+    {
+        ans.push_back(arr[i]);
+        combinationSum(arr, ans, finalAns, index, target - arr[i]);
+        ans.pop_back();
+    }
+    
+
+}
+
+int main() {
+    
+    vector<int> arr = {2,3,6,7};
+    vector<int> ans;
+    vector<vector<int>> finalAns;
+    int i = 0;
+    int target = 7;
+    combinationSum(arr, ans, finalAns, i, target);
+
+}
+
+// This is the combinationSum 2 problem of the leetcode same as the combination sum but the only difference is the we dont have to use same digit again and no duplicate ans are allowed
+
+
+void combinationSum(vector<int>& arr, vector<int>& ans, vector<vector<int>>& finalAns, int index, int target){
+
+    if(target < 0){
+        return;
+    }
+    if(target == 0){
+        finalAns.push_back(ans);
+    }
+
+    for (int i = index; i < arr.size(); i++)
+    {
+        // This is the checking condition in which we check that if the element is same as the previous element so it make the same pair as the above thats why we will chcek if the next element is same then we continue with not inclulding it
+        if(i > index && arr[i] == arr[i - 1]){
+            continue;
+        }
+        ans.push_back(arr[i]);
+        combinationSum(arr, ans, finalAns, index + 1, target - arr[i]); 
+        // we have increased the index by 1 in this because we can not include the same digit again
+        ans.pop_back();
+    }
+    
+
+}
+
+int main() {
+    
+    vector<int> arr = {10,1,2,7,6,1,5};
+    int index = 0;
+    vector<int> ans;
+    vector<vector<int>> finalAns;
+    int target = 8;
+
+    sort(arr.begin() , arr.end());
+
+    combinationSum(arr, ans, finalAns, index, target);
+
+    return 0;
+}
